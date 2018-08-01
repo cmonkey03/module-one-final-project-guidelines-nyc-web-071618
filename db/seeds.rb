@@ -23,4 +23,19 @@ CSV.read("db/concerns/WordsByCharacter.csv").each do |csv_row|
   end
 end
 
-# CSV.read("db/")
+CSV.read("db/concerns/WordsByCharacter.csv").each do |csv_row|
+  #Create Wordcount instance, assign count:)
+  Wordcount.create(count: csv_row[4])
+  #find the character_id for Wordcount instance character
+  Character.all.each do |character|
+    if csv_row[2] == character.name
+      Wordcount.last.update(character_id: character.id)
+    end
+  end
+  #find the chapter_id for Wordcount instance chapter
+  Chapter.all.each do |chapter|
+    if csv_row[1] == chapter.name
+      Wordcount.last.update(chapter_id: chapter.id)
+    end
+  end
+end
