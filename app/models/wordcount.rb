@@ -4,6 +4,11 @@ class Wordcount < ActiveRecord::Base
 end
 
 
+# #4.Array of wordcounts per chapter
+# 5. Array of wordcounts per character
+# 6. Wordcounts count per character
+#7. Words per movie
+#8. Talking characters per movie.
 
 # 1. most_talkative_character
 #   //per trilogy
