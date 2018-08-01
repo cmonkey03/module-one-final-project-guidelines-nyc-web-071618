@@ -7,8 +7,10 @@ require 'csv'
 
 
 CSV.read("db/concerns/WordsByCharacter.csv").each do |csv_row|
-  new_character = Character.create(name:csv_row[2],csv_row[3])
-  new_chapter = Chapter.new(csv_row[1],csv_row[0])
+  new_character = Character.create(name: csv_row[2], race: csv_row[3])
+  new_chapter = Chapter.create(name: csv_row[1], film: csv_row[0])
+  Wordcount.create(count: csv_row[4], character_id: new_character.id, chapter_id: new_chapter.id)
   binding.pry
-  Wordcount.new(csv_row[4],new_character,chapter:new_chapter,character_id:new_character.id,chapter_id:new_chapter.id)
 end
+
+# #Update seeds (CSV)
