@@ -1,9 +1,9 @@
 require 'pry'
 require 'csv'
 
-# Chapter.delete_all
-# Character.delete_all
-# Wordcount.delete_all
+Chapter.delete_all
+Character.delete_all
+Wordcount.delete_all
 
 unique_chapters = []
 

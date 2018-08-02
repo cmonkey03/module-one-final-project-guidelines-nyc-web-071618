@@ -1,9 +1,6 @@
 require_relative '../config/environment'
 
+new_cli = CommandLineInterface.new
 
-
-puts "HELLO WORLD"
-
-def character_name_to_instance(name)
-  character_instance = Character.all.select {|character_instance| character_instance.name == name }
-end
+film = new_cli.gets_user_input_1
+new_cli.answer_1(film)
