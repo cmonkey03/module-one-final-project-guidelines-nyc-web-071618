@@ -37,15 +37,36 @@ class Character < ActiveRecord::Base
   end
 
   def find_wordcounts_for_character
-    Wordcount.all.select {|count| count.character_id == self.id}
+    Wordcount.all.select {|wc| wc.character_id == self.id}
   end
 
   def character_wordcount_total
-    wordcount_objects = self.find_wordcounts_for_character
-    wordcount_objects.map {|object| object.count}.reduce(:+)
+    wordcounts = self.find_wordcounts_for_character
+    wordcounts.map {|object| object.count}.reduce(:+)
   end
 
-  
+  def films
+    wordcounts = self.find_wordcounts_for_character
+    wordcounts.map {|wc| Chapter.chapter_id_to_film(wc.chapter_id)}.uniq
+  end
+
+  def character_wordcount
+    film_wc_hash = {}
+    self.films.each {|film| film_wc_hash[film] = 0 }
+    wordcounts = self.find_wordcounts_for_character
+    film_wc_hash.map do |film|
+      wordcounts.each do |wc|
+        
+        binding.pry
+      end
+    end
+
+    # wordcounts.each do |wc|
+    #   if wc.chapter_id
+    #   binding.pry
+    # end
+  end
+
   # def find_character_films
   #   Wordcount.all.select do |wordcount|
   #       binding.pry
