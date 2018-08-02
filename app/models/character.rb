@@ -28,10 +28,24 @@ class Character < ActiveRecord::Base
     race_characters_hash
   end
 
-  # def characters_per_film(film)
-  #
-  # end
+  def self.count_characters_per_race
+    count_characters_hash = {}
+    add_characters_to_race_hash.each do |race|
+      count_characters_hash[race[0]] = race[1].size
+    end
+    count_characters_hash
+  end
 
+  def find_wordcounts_for_character
+    Wordcount.all.select {|count| count.character_id == self.id}
+  end
+
+  def character_wordcount_total
+    wordcount_objects = self.find_wordcounts_for_character
+    wordcount_objects.map {|object| object.count}.reduce(:+)
+  end
+
+  
   # def find_character_films
   #   Wordcount.all.select do |wordcount|
   #       binding.pry
@@ -41,7 +55,7 @@ class Character < ActiveRecord::Base
   #   id_arr.map {|id| Chapter.chapter_id_to_film(id)}.uniq
   # end
 
-end
+end # end of Character class
 
 
 # 1. array_of_all_characters (total, per movie)

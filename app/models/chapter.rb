@@ -18,4 +18,10 @@ class Chapter < ActiveRecord::Base
     Chapter.all.find {|chapter| chapter.id == chapter_id}.film
   end
 
-end
+
+  # def characters_per_film(film)
+  #
+  # end
+
+
+end # end of Chapter class
