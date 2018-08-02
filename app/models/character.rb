@@ -54,31 +54,14 @@ class Character < ActiveRecord::Base
     film_wc_hash = {}
     self.films.each {|film| film_wc_hash[film] = 0 }
     wordcounts = self.find_wordcounts_for_character
-    film_wc_hash.map do |film|
-      wordcounts.each do |wc|
-        
-        binding.pry
+    wordcounts.each do |wc|
+      Chapter.all.each do |chap|
+        if wc.chapter_id == chap.id
+          film_wc_hash[chap.film] += wc.count
+        end
       end
     end
-
-    # wordcounts.each do |wc|
-    #   if wc.chapter_id
-    #   binding.pry
-    # end
+    film_wc_hash
   end
 
-  # def find_character_films
-  #   Wordcount.all.select do |wordcount|
-  #       binding.pry
-  #     wordcount.character_id == self.id
-  #   end
-  #
-  #   id_arr.map {|id| Chapter.chapter_id_to_film(id)}.uniq
-  # end
-
 end # end of Character class
-
-
-# 1. array_of_all_characters (total, per movie)
-# 2. array_of_all_characters.uniq (total, per movie)
-# 3.
