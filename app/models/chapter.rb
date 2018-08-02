@@ -14,4 +14,8 @@ class Chapter < ActiveRecord::Base
     chapters.count
   end
 
+  def self.chapter_id_to_film(chapter_id)
+    Chapter.all.find {|chapter| chapter.id == chapter_id}.film
+  end
+
 end
