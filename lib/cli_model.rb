@@ -113,30 +113,30 @@ class CommandLineInterface
     if user_fact_choice == 1
       puts Character.most_talkative_character_in_trilogy
       puts <<-gandalf
-                  ,---.
+                           ,---.
                           /    |
                          /     |
-            Gandalf            /      |
+            Gandalf     /      |
                        /       |
                   ___,'        |
                 <  -'          :
-                 `-.__..--'``-,_\_
+                `-.__..--'``-,_\\_
                     |o/ ` :,.)_`>
                     :/ `     ||/)
                     (_.).__,-` |\
                     /( `.``   `| :
-                    \'`-.)  `  ; ;
+                  \\'`-.)  `  ; ;
                     | `       /-<
                     |     `  /   `.
             ,-_-..____     /|  `    :__..-'\
             /,'-.__\\  ``-./ :`      ;       \
-            `\ `\  `\\  \ :  (   `  /  ,   `. \
-            \` \   \\   |  | `   :  :     .\ \
-            \ `\_  ))  :  ;     |  |      ): :
-            (`-.-'\ ||  |\ \   ` ;  ;       | |
-            \-_   `;;._   ( `  /  /_       | |
-            `-.-.// ,'`-._\__/_,'         ; |
-            \:: :     /     `     ,   /  |
+          `\\`\\  `\\ \\ :  (   `  /  ,   `. \
+          \\` \\   \\   |  | `   :  :    .\\ \
+          \\ `\\_  ))  :  ;     |  |      ): :
+          (`-.-'\\ || |\\\\   ` ;  ;       | |
+          \\-_   `;;._   ( `  /  /_       | |
+            `-.-.// ,'`-._\\__/_,'         ; |
+          \\:: :     /     `     ,   /  |
             || |    (        ,' /   /   |
             ||                ,'   / SSt|
                     gandalf
@@ -207,6 +207,38 @@ class CommandLineInterface
     end
   end # end of #display_films_fact
 
+  def get_characters_fact_choice
+    puts "\n
+    Now is your chance to gaze into the Palantir and find out just how\n
+    much of a blabber mouth your character is. Select and enter the number\n
+    of a character below:\n"
+    puts"\n"
+    sleep 5
+    Character.all.each_with_index do |char,index|
+      puts "#{index+1}. #{char.name}"
+    end
+
+    puts "\n"
+
+    valid_input = false
+    until valid_input
+      user_input = gets.chomp.to_i
+      if user_input.class == Fixnum && user_input > 0 && user_input < 75
+        puts"\n
+        Thank you. Gazing into Palantir."
+        valid_input = true
+      else
+        puts"\n
+        Invalid input. Please enter an integer between 1 and 74 inclusive."
+      end
+    end
+    user_input
+  end
+
+  def display_characters_fact(user_char_choice)
+    char_name = Character.all[user_char_choice-1].name
+    Character.character_wordcount_ranking(char_name)
+  end
   # def get_fantastyrace_fact_choice
   #
   # end # end of #get_fantastyrace_fact_choice
@@ -228,9 +260,11 @@ class CommandLineInterface
     elsif main_menu_choice == 2
       films_fact_choice = get_films_fact_choice
       display_films_fact(films_fact_choice)
+    elsif main_menu_choice == 3
+      char_fact_choice = get_characters_fact_choice
+      display_characters_fact(char_fact_choice)
     else
-      characters_fact_choice = get_characters_fact_choice
-      display_characters_fact(characters_fact_choice)
+
     end
 
   end # end of #fork_in_road
@@ -242,18 +276,16 @@ class CommandLineInterface
 
   def get_menu_or_exit
     puts "\n
-    There you go! Intersing, amirite?\n
+    There you go! Interesting, amirite?\n
     Enter 'main' to return to the main menu,\n
     or if you're done here enter 'exit':"
     valid_response = false
-    unless valid_response
+    until valid_response == true
       user_input = gets.chomp
-      if user_input == 'menu'
+      if user_input == 'exit'
         valid_response = true
-        return user_input
-      elsif user_input == 'exit'
-        valid_response == true
-        return user_input
+      elsif user_input == 'menu'
+        valid_response = true
       else
         puts "\n
         Invalid input. Please enter 'main' or 'quit' below:"
@@ -285,7 +317,7 @@ class CommandLineInterface
       end
     end
     sleep 1
-    puts "Thanks for playing! Watch out for Ring Wraiths! Bye bye."
+    puts "You have passed the test. You shall remain Galadriel and fade into the West. Bai bai!"
   end # end of #runner
 
 end # end of CommandLineInterface class

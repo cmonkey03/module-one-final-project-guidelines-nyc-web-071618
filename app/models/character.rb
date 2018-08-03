@@ -76,6 +76,23 @@ class Character < ActiveRecord::Base
     all_characters_and_wordcount_hash.sort_by { |_key, value| value }.to_h
   end
 
+  def self.get_array_of_counts_greatest_to_least
+    char_wc_least_to_greatest = character_wordcount_hash_least_to_greatest.map {|key,value| value}
+    char_wc_greatest_to_least = char_wc_least_to_greatest.reverse
+  end
+
+  def self.character_wordcount_ranking(character)
+    user_choice_wordcount = character_wordcount_hash_least_to_greatest.find {|key,value| key == character}
+    index_of_user_choice_wordcount = 0
+    get_array_of_counts_greatest_to_least.each_with_index do |count,index|
+      if count == user_choice_wordcount[1]
+        index_of_user_choice_wordcount = index + 1
+      end
+    end
+    puts "#{character} is ranked #{index_of_user_choice_wordcount} out of #{Character.count}! \n
+            MYYY PRECIOUSSSSSSSSSS!!!"
+  end
+
   def self.most_talkative_character_in_trilogy
     character_wordcount_hash_least_to_greatest.keys.last
   end
