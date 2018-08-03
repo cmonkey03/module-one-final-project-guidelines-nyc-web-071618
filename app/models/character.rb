@@ -81,7 +81,7 @@ class Character < ActiveRecord::Base
   end
 
   def self.least_talkative_character_in_trilogy
-    character_wordcount_hash_least_to_greatest.keys.last
+    character_wordcount_hash_least_to_greatest.keys.first
     # consider adding all chars tied for least talkative
   end
 
